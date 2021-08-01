@@ -4,15 +4,9 @@ import styles from "./styles";
 import Field from "../../../components/Field";
 import CustomButton from "../../../components/CustomButton";
 
-export default function Item({name, price, description}) {
-    let startingAmount = 1;
+export default function Item({name, price, description, amount: startingAmount}) {
     const [amount, setAmount] = useState(startingAmount);
     const [total, setTotal] = useState(startingAmount * price);
-    const [expand, setExpand] = useState(false);
-    const invertExpand = () => {
-        setExpand(!expand);
-        startingAmount = 1;
-    }
     const calculateTotal = (amount) => {
         setTotal(amount * price);
     };
@@ -21,7 +15,7 @@ export default function Item({name, price, description}) {
         calculateTotal(newAmount);
     };
     return (<>
-        <TouchableOpacity style={styles.information} onPress={invertExpand}>
+        <View style={styles.information}>
             <Text style={styles.name}>{name}</Text>
             <Text style={styles.description}>{description}</Text>
             <Text style={styles.price}> {
@@ -30,8 +24,7 @@ export default function Item({name, price, description}) {
                 }).format(price)
             }
             </Text>
-        </TouchableOpacity>
-        {expand && 
+        </View>
         <View style={styles.shoppingCart}>
             <View>
                 <View style={styles.value}>
@@ -47,9 +40,9 @@ export default function Item({name, price, description}) {
                     <TextInput/>
                 </View>
             </View>
-            <CustomButton value={"Adicionar o Carrinho"} action={() => {
+            <CustomButton value={"Remover do Carrinho"} action={() => {
             }}/>
-        </View>}
+        </View>
         <View style={styles.divisor}/>
     </>);
 
